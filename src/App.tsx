@@ -11,9 +11,9 @@ const App: React.FC = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const handleComplete = () => {
-    setSnackbarOpen(true);
-  };
+  // const handleComplete = () => {
+  //   setSnackbarOpen(true);
+  // };
 
   return (
     <div style={{ padding: '20px', textAlign: 'center' }}>
