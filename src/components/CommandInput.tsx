@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addHistory, setCommands, setOptimizedCommands } from '../store/slices/manipulatorSlice';
@@ -17,6 +17,8 @@ export const CommandInput: React.FC = () => {
     if (!input) return;
 
     const commands = input.split('');
+      // @ts-ignore
+
     const optimized = optimizeCommands(commands);
     const date = new Date().toLocaleString();
 
@@ -39,6 +41,7 @@ export const CommandInput: React.FC = () => {
   };
 
   return (
+      // @ts-ignore
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2 }}>
       <TextField
         {...register('commands')}

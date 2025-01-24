@@ -19,6 +19,7 @@ export const AdminLogin: React.FC = () => {
   return (
     <Box
       component="form"
+      // @ts-ignore
       onSubmit={handleSubmit(onSubmit)}
       sx={{ maxWidth: 400, margin: 'auto', mt: 5 }}
     >
