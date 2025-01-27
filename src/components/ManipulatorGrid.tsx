@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { Box } from '@mui/material';
+import { Box, Slider, Typography } from '@mui/material';
 
 const CELL_SIZE = 50;
 
@@ -9,6 +9,8 @@ export const ManipulatorGrid: React.FC = () => {
   const grid = useSelector((state: RootState) => state.manipulator.grid);
   const commands = useSelector((state: RootState) => state.manipulator.commands);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  const [speed, setSpeed] = useState(500)
 
   useEffect(() => {
     let index = 0;
@@ -35,12 +37,13 @@ export const ManipulatorGrid: React.FC = () => {
       });
 
       index++;
-    }, 500);
+    }, speed);
 
     return () => clearInterval(interval);
-  }, [commands, grid]);
+  }, [commands, grid, speed]);
 
   return (
+  <>
     <Box
       sx={{
         display: 'grid',
@@ -68,5 +71,20 @@ export const ManipulatorGrid: React.FC = () => {
         ))
       )}
     </Box>
+     <Box sx={{ marginTop: 4, textAlign: 'center' }}>
+     <Typography>Скорость анимации (ms): {speed}</Typography>
+     <Slider
+       value={speed}
+       min={100}
+       max={2000}
+       step={100}
+       onChange={(e, newValue) => {
+        console.log(e);
+        setSpeed(newValue as number)
+       }}
+       sx={{ width: '300px', margin: '20px auto' }}
+     />
+   </Box>
+   </>
   );
 };

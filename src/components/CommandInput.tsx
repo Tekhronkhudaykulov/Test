@@ -5,12 +5,25 @@ import { addHistory, setCommands, setOptimizedCommands } from '../store/slices/m
 import { applyCommandsToGrid, optimizeCommands } from '../utils/optimizeCommands';
 import { Box, TextField, Button } from '@mui/material';
 import { RootState } from '../store/store';
+import { showSnackbar } from '../store/slices/snackBarSlice';
 
 export const CommandInput: React.FC = () => {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
 
   const {grid} = useSelector((state: RootState) => state.manipulator);
+
+
+  const handleOperationComplete = () => {
+    dispatch(showSnackbar({
+      message: "Операция успешно выполнена!",
+      severity: "success",
+    }));
+  };
+
+
+  
+  
 
   const onSubmit = (data: { commands: string }) => {
     const input = data.commands.trim();
@@ -36,13 +49,19 @@ export const CommandInput: React.FC = () => {
         gridAfter,
       })
     );
+    handleOperationComplete()
 
     reset();
   };
 
+
+
   return (
+      <>
+    <Box component="form"
       // @ts-ignore
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 2 }}>
+      onSubmit={handleSubmit(onSubmit)} 
+      sx={{ mt: 2 }}>
       <TextField
         {...register('commands')}
         label="Команды"
@@ -53,5 +72,7 @@ export const CommandInput: React.FC = () => {
       Оптимизация и хранение
       </Button>
     </Box>
+    </>
+   
   );
 };
